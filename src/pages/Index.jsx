@@ -7,7 +7,8 @@ const Index = () => {
   const [url, setUrl] = useState("");
   const [variables, setVariables] = useState([]);
   const addVariable = () => {
-    setVariables([...variables, { name: "", type: "", description: "", example: "" }]);
+    const newVariable = { name: "", type: variables.length === 0 ? "page" : "", description: "", example: "" };
+    setVariables([...variables, newVariable]);
   };
   const updateVariable = (index, field, value) => {
     const newVariables = [...variables];
@@ -41,7 +42,11 @@ const Index = () => {
           {variables.map((variable, index) => (
             <HStack key={index}>
               <Input placeholder="Variable Name" size="md" value={variable.name} onChange={(e) => updateVariable(index, "name", e.target.value)} />
-              <Input placeholder="Type (e.g., string, number)" size="md" value={variable.type} onChange={(e) => updateVariable(index, "type", e.target.value)} />
+              <Select placeholder="Select content type" size="md" value={variable.type} onChange={(e) => updateVariable(index, "type", e.target.value)} disabled={index === 0}>
+                <option value="section">Section</option>
+                <option value="component">Component</option>
+                <option value="page">Page</option>
+              </Select>
               <Input placeholder="Description" size="md" value={variable.description} onChange={(e) => updateVariable(index, "description", e.target.value)} />
               <Input placeholder="Example" size="md" value={variable.example} onChange={(e) => updateVariable(index, "example", e.target.value)} />
               <IconButton aria-label="Delete Variable" icon={<FaTrash />} onClick={() => deleteVariable(index)} />
