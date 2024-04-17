@@ -5,6 +5,19 @@ import { useState } from "react";
 
 const Index = () => {
   const [url, setUrl] = useState("");
+  const [variables, setVariables] = useState([]);
+  const addVariable = () => {
+    setVariables([...variables, { name: "", type: "", description: "", example: "" }]);
+  };
+  const updateVariable = (index, field, value) => {
+    const newVariables = [...variables];
+    newVariables[index][field] = value;
+    setVariables(newVariables);
+  };
+  const deleteVariable = (index) => {
+    const newVariables = variables.filter((_, i) => i !== index);
+    setVariables(newVariables);
+  };
   return (
     <Box p={5}>
       <VStack spacing={4} align="stretch">
@@ -25,12 +38,16 @@ const Index = () => {
           Define Template Variables:
         </Text>
         <VStack spacing={2}>
-          <HStack>
-            <Input placeholder="Variable Name" size="md" />
-            <Input placeholder="Type (e.g., string, number)" size="md" />
-            <IconButton aria-label="Delete Variable" icon={<FaTrash />} />
-          </HStack>
-          <Button leftIcon={<FaPlus />} colorScheme="green" variant="outline">
+          {variables.map((variable, index) => (
+            <HStack key={index}>
+              <Input placeholder="Variable Name" size="md" value={variable.name} onChange={(e) => updateVariable(index, "name", e.target.value)} />
+              <Input placeholder="Type (e.g., string, number)" size="md" value={variable.type} onChange={(e) => updateVariable(index, "type", e.target.value)} />
+              <Input placeholder="Description" size="md" value={variable.description} onChange={(e) => updateVariable(index, "description", e.target.value)} />
+              <Input placeholder="Example" size="md" value={variable.example} onChange={(e) => updateVariable(index, "example", e.target.value)} />
+              <IconButton aria-label="Delete Variable" icon={<FaTrash />} onClick={() => deleteVariable(index)} />
+            </HStack>
+          ))}
+          <Button leftIcon={<FaPlus />} colorScheme="green" variant="outline" onClick={addVariable}>
             Add Variable
           </Button>
         </VStack>
