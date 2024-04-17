@@ -1,5 +1,5 @@
 // Webpage to Jinja-Template Converter Interface
-import { Box, Button, Input, Text, VStack, Heading, Textarea, IconButton, HStack } from "@chakra-ui/react";
+import { Box, Button, Input, Text, VStack, Heading, Textarea, IconButton, HStack, Select } from "@chakra-ui/react";
 import { FaMousePointer, FaSave, FaCode, FaTrash, FaPlus } from "react-icons/fa";
 
 const Index = () => {
@@ -12,6 +12,12 @@ const Index = () => {
 
         <Text fontSize="md">Enter the URL of the webpage you want to convert into a Jinja template:</Text>
         <Input placeholder="Enter URL here..." size="lg" />
+
+        <Select placeholder="Select content type" size="lg" mb={4}>
+          <option value="section">Section</option>
+          <option value="component">Component</option>
+          <option value="page">Page</option>
+        </Select>
 
         <Button leftIcon={<FaMousePointer />} colorScheme="blue" variant="solid">
           Load Webpage
